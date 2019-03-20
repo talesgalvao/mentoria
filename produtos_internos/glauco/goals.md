@@ -15,7 +15,7 @@
 ## Médio prazo (6 meses)
   - Ter segurança para discutir tecnicamente
   - Ser referencia no time em ambiente de desenvolvimento
-    - Ser referencia no time em testes
+  - Ser referencia no time em testes
 
 ## Longo prazo (12 meses)
   - Promoção
