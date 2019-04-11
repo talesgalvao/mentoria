@@ -2,16 +2,16 @@
 
 ## Curto prazo - 15/04/2019 a 15/07/2019
 
-- Plataforma Vindi e API
-  - entender melhor as funcionalidades da plataforma e api a nivel tecnológico
-  - entender melhor as funcionalidades da plataforma e api a nivel de negócio
-- Infrastutura dos serviços da Vindi
+- Infrastutura dos serviços e funcionalidades da Vindi
+  - entender melhor a plataforma e api a nivel tecnológico
+  - entender melhor a plataforma e api a nivel de negócio
   - entender sobre os serviços da AWS utilizados
+- Desenvolver mentoria
+  - com o Laerte
 
 
 ## Médio prazo - 15/04/2019 a 15/10/2019
 
-- Entender melhor de infraestrutura de rede
 - Entender melhor sobre o mercado financeiro
 - Tornar-me um desenvolvedor sênior
   - desenvolver skills de testes automatizados
