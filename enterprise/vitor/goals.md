@@ -9,7 +9,6 @@
 - Desenvolver mentoria
   - com o Laerte
 
-
 ## Médio prazo - 15/04/2019 a 15/10/2019
 
 - Entender melhor sobre o mercado financeiro
