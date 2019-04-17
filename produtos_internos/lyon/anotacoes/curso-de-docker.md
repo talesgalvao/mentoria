@@ -49,11 +49,15 @@ docker pause                                    pausa um container
 
 docker unpause                                  tira o container do pause
 
+docker history (nome_da_imagem)                 exibe o histórico de alterações da imagem
+
 docker stats (container_id)                     exibe estatísticas do container
 
 docker top (container_id)                       exibe a lista de processos em execução no container
 
 docker logs (container_id)                      exibe os logs do container
+
+docker tag (image_id) (novo_nome_da_imagem)     altera o nome da imagem
 
 docker rm (container_id)                        remove o container do host
 
@@ -65,6 +69,10 @@ docker inspect (nome do container)              exibe as configs do container, c
                                                 memória, cpu, etc.
 
 docker update (nome do container)
+
+docker build                                    constrói a imagem com base no Dockerfile
+  -t (nome_da_imagem):(versao_da_imagem) (dir)  sempre deve ser usado para fazer o build de uma
+                                                imagem
 
 ### Limitando CPU e Memória dos containers
 
@@ -126,5 +134,18 @@ docker run --volumes-from (nome do container)
 docker run -d -p 5432:5432 --name pgsql1 --volumes-from dbdados -e POSTGRESQL_USER=docker -e
 POSTGRESQL_PASS=docker -e POSTGRESQL_DB=docker kamui/postgresql 
 ```
+### Dockerhub
+É um repositório privado/público, onde você pode disponibilizar/compartilhar a sua imagem. Empresas
+e pessoas físicas podem publicar imagens e compartilhá-las no [docker hub](hub.docker.com).
+
+#### Comandos Dockerhub
+
+docker login                faz o login no dockerhub
+
+docker search (image_name)  procura uma imagem no dockerhub
+
+docker pull                 puxa uma imagem do dockerhub
+
+docker push                 envia uma imagem para o dockerhub
 
 
