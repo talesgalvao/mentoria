@@ -31,7 +31,11 @@ docker run (container_name)                     usado para executar/startar um c
                                                   container
 
   -e (nome da env_var)                            define uma variável de ambiente
-
+/
+  --restart=(parametro)                           define quando o container pode ser restartado, o
+                                                  parametro 'always' indica que sempre que parar 
+                                                  um serviço o container pode ser restartado
+                                                  automaticamente
 
 docker ps                                       pega todos os containers em execução
 
@@ -147,5 +151,126 @@ docker search (image_name)  procura uma imagem no dockerhub
 docker pull                 puxa uma imagem do dockerhub
 
 docker push                 envia uma imagem para o dockerhub
+
+#### Criando um Dockerhub local
+
+É preciso criar um Registry local, Registry é responsável por armazenar as imagens, é como criar um
+repositório de imagens local.
+
+
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+O Registry local não tem controle de usuário, por isso é importante que a imagem tenha:
+
+(endereço_do_registry):(porta_do_registry)/(image_name)
+
+Conforme o exemplo acima ficaria assim:
+
+localhost:5000/webserver:1.0
+
+* importante alterar o nome do Registry criado para que seja acessível através do nome, para isso:
+
+docker tag f32a97de94e1 localhost:5000/webserver:1.0
+
+O comando acima é usado para renomear uma imagem.
+
+
+Para enviar uma imagem para o Registry local:
+
+docker push localhost:5000/webserver:1.0
+
+Os outros comandos do dockerhub também funcionam, só precisa colocar o endereço do registry após o
+comando, como fizemos no docker push acima.
+
+Para consultar as imagens disponíveis no Registry local é possível usar o comando:
+
+curl localhost:5000/v2/_catalog
+
+### Redes no Docker
+
+##### Definir Dns
+docker run -ti --dns 8.8.8.8 debian
+indica o endereço do DNS que vai responder para o container
+
+##### Definir hostname  
+docker run -ti --hostname meupc debian
+define um hostname dentro do container, é diferênte do parâmetro ```--name```, que define um nome
+para a imagem, o hostname é o nome da máquina dentro do container.
+
+##### Linkar containers
+docker run -ti --link (container_name)
+
+ex:
+
+docker run -ti --name container1 debian
+
+docker run -ti --link container1 --name container2 debian
+
+isso vai deixar o container1 acessível ao container2.
+
+##### Expor uma porta específica
+docker run -ti --expose 80 debian
+
+Roda a imagem debian, com a porta 80 acessível
+
+##### Conectar uma porta do container a uma porta do host
+docker run -ti --publish 8080:80 debian
+Nesse caso a porta 80 do container está ligada a porta 8080 do meu host. Também funciona com o
+```-p```
+
+##### definir um mac address
+docker run -ti --mac-address 12:34:de:b0:6b:61 debian
+
+##### Usar interface de rede do host dentro do container
+docker run -ti --net=host debian
+Isso leva todas as informações de rede do host para dentro do container, inclusive rotas definidas
+no /etc/hosts. Deixa o container acessível pelo endereço do host.
+
+### Docker-Machine
+Cria hosts para executar containers em lugares como aws, googlecloud, vms, etc.
+
+#### Instalação
+
+https://docs.docker.com/v17.09/machine/install-machine/
+
+Também precisa instalar o VirtualBox: sudo apt install virtualbox
+
+#### Criando host
+
+docker-machine create --driver virtualbox mymachine
+
+
+#### Acessando o Docker-Machine criado
+
+```docker-machine env lmachine```
+Para exibir as variáveis de ambiente da docker machine
+
+```eval $(docker-machine env lmachine)```
+Para exportar as variáveis de ambiente
+
+Depois do ```eval``` você já está conectado na docker machine, se rodar ```docker ps``` ele não
+retorna nenhum container em execução, isso porque a docker machine ainda não tem nada em execução.
+O comando ```docker-machine ls``` exibe os processos que estão em execução nesse momento e só vai
+retornar a docker machine porque só ela foi iniciada até esse momento.
+
+#### Lista de comandos
+
+```docker-machine ip (machine_name)
+Exibe o ip da docker-machine
+
+```docker-machine ssh (machine_name)
+conecta no docker-machine via ssh
+
+```docker-machine inspect (machine_name)```
+Inspeciona os recursos utilizado pela Docker-Machine
+
+docker-machine stop (machine_name)
+Para a Docker-Machine
+
+docker-machine ls (machine_name)
+Exibe o status da Docker-Machine
+
+docker-machine rm (machine_name)
+Remove a Docker-Machine
 
 
