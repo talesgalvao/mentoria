@@ -274,3 +274,113 @@ docker-machine rm (machine_name)
 Remove a Docker-Machine
 
 
+### Docker Compose
+Com o Docker Compose é possível criar um container com todas os componentes de uma aplicação, por
+exemplo, banco + aplicação + redis. Sem o compose seria necessário criar 3 containers diferêntes.
+
+#### Comandos
+
+build             - indica o caminho do dockerfile
+```build: .```
+
+command           - envia um comando para ser executado dentro do container
+```comand: bundle exec thin -p 3000```
+
+container_name    - nome do container
+```container_name: my-web-container```
+
+dns               - indica o dns server
+```dns: 8.8.8.8```
+
+dns_seach         - especifica um search domain
+```dns_search: example.com```
+
+dockerfile        - especifica um Dockerfile alternativo
+```dockerfile: Dockerfile-alternate```
+
+env_file          - especifica um arquivo de variáveis de ambiente
+```env_file: .env```
+
+enviroment        - adiciona variáveis de ambiente
+```enviroment: RACK_ENV: development```
+
+expose            - expõe a porta do container
+```
+expose:
+-3000
+-8000
+```
+external_link     - linka containers que não foram especificados no docker-compose atual
+```
+external_links:
+ - redis_1
+ - project_db_1:mysql
+```
+
+extra_hosts - adiciona uma entrada no /etc/hosts do container
+```
+extra_hosts:
+ - "somehost:162.242.195.82"
+ - "otherhost:50.31.209.229"
+```
+
+image       - indica uma imagem que será usada na criação do container
+```
+image:ubuntu:16.04
+```
+
+labels      - adiciona metadata ao container
+```
+labels:
+ com.example.description: "Accounting webapp"
+ com.example.department: "Finance"
+```
+
+links       - linka containers dentro do mesmo docker-compose
+```
+links:
+ - db
+ -db:database
+```
+
+log_driver  - indica o formato de log a ser gerado (json-file, syslog, etc)
+```
+driver: syslog
+```
+
+logging     - similar ao log_driver, com opções
+```
+logging:
+  driver: syslog
+  options: 
+    syslog-address: "tcp://192.168.0.42:123"
+```
+
+net         - modo de uso de rede
+```
+net: "bridge"
+net: "host"
+```
+
+ports       - expõe as portas do container e do host
+```
+ports:
+  - "3000"
+  - "8000:8000" (redirect da porta do container com a porta do host)
+```
+
+volumes, volume_driver    - monta volumes no container
+```
+volumes:
+  - /var/lib/mysql
+  - /opt/data:/var/lib/mysql
+  - ./cache:/tmp/cache
+```
+
+volumes_from        - monta volumes através de outro container
+```
+volumes_from
+  - service_name
+  - service_name:ro
+```
+
