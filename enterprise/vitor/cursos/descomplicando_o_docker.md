@@ -109,3 +109,80 @@ docker run -p 5432:5432 --name pgsql2 --volumes-from dbdados -e POSTGRESQL_USER=
 - O parêmetro `-e` são para variáveis de ambiente. São variáves de ambientes passadas para o container.
 
 Ao executar esses dois containeres do Postgres, o diretório dbdados é preenchido com diversos arquivos criados pelo servidor de banco de dados.
+
+
+### Aula 9
+Dockerfile é um arquivo análogo a um Makefile, mas serve para instruções de containeres.
+
+Instruções de um Dockerfile:
+- `FROM debian` primeira instrução do Dockerfile. Determina qual a imagem que será usada como base para sua nova imagem.
+- `ADD path_from_host path_from_container` copia um arquivo do host para o container (inclusive arquivos empacotados, como .tar)
+- `LABEL Description="foo"` serve para colocar metadata, como versão, fabricante, descrição, etc
+- `COPY path_from_host path_from_container` copia arquivos ou diretórios do host para o container
+- `ENTRYPOINT ["/usr/bin/apache2ctl", "-D", "FOREGROUND"]` permite que um binário executável seja o principal processo dentro do container. Se esse processo for finalizado, o container também é.
+- `CMD ["sh", "-c", "echo", "$HOME"]` é um parâmetro do comando ENTRYPOINT do container
+- `ENV myname="Vitor"` permite criar uma variável de ambiente no container
+- `EXPOSE 80` mostra qual a porta do container será exposta
+- `RUN apt-get update && apt-get install apache2 && apt-get clean` permite rodar comandos dentro do container. Quanto menos comandos `RUN` seu container tiver, melhor, pois cada `RUN` cria uma nova camada. É preferível concatenar diversos comandos em um `RUN`.
+- `USER vitor` define um usuário padrão para a imagem. Caso essa instrução não seja passada, o usuário será `root`
+- `WORKDIR /foo` define o diretório raiz do container. Quando entrar no container, esse será o diretório corrente
+- `VOLUME /path_to_directory` define o volume do container
+- `MAINTAINER Vitor Kusiaki` define a pessoa que mantém esse Dockerfile
+
+
+### Aula 10
+Com o comando `docker build` é possível construir uma imagem a partir de um Dockerfile. O comando é `docker build -t image_name:version path_to_dockerfile`.
+
+##### Diferenças entre as instruções RUN, CMD e ENTRYPOINT:
+
+`RUN` executa comandos, faz o commit e cria uma nova camada acima da camada que está com instruções executadas.
+
+`ENTRYPOINT` permite um comando padrão que sempre será executado quando o container for executado.
+
+`CMD` pode servir para colocar mais parâmetros para a instrução ENTRYPOINT, mas também pode servir para executar comandos que podem ser sobrescritos ao rodar um container.
+
+
+### Aula 11
+Para criar uma imagem a partir de um arquivo, o nome dele deve sempre ser `Dockerfile`. A primeira linha do arquivo deve ser sempre o `FROM`
+Exemplo de instalação de um servidor apache:
+
+```
+FROM debian
+
+RUN apt-get update && apt-get install -y apache2 && apt-get clean
+
+ENV APACHE_LOCK_DIR="/var/lock"
+ENV APACHE_PID_FILE="/var/run/apache2.pid"
+ENV APACHE_RUN_USER="www-data"
+ENV APACHE_RUN_GROUP="www-data"
+
+LABEL Description="Webserver"
+
+VOLUME /var/www/html
+
+EXPOSE 80
+
+ENTRYPOINT apachectl -D FOREGROUND
+
+```
+
+Para fazer o build da imagem, utilize `docker build -t image-name:version path_to_dockerfile`, no exemplo acima será `docker build -t webserver:1.0 .`
+
+Para entrar no container, utilize `docker run -it webserver:1.0 bash`. Em seguida, pegue o IP do seu container com o comando `ip addr`, saia do container sem finalizá-lo com o comando `ctrl+p+q` e teste seu servidor apache utilizando o cURL `curl <container_ip>:80`
+
+
+### Aula 12
+[Docker Hub](https://hub.docker.com/) é um repositório público e privado mantido pelo Docker. É utilizado para compartilhamento de imagens. O componente do Docker responsável por armazenar e compartilhar imagens chama-se `registry` (ou `distribution`). O Docker Hub é um registry.
+
+É possível fazer auditorias em imagens desconhecidas (e não confiáveis) utilizando o comando `docker inspect image-name:version`. Outro comando é o `docker history image-name:version` que permite visualizar as camadas da imagem.
+
+Preparando uma imagem para o Docker Hub:
+
+- O nome da imagem deve conter também o nome do usuário Docker Hub
+- Para renomear uma imagem, utilize `docker tag image-id new-name`. Exemplo: `docker tag 5a17715803a9 vkusiaki/webserver:1.0`
+- Para subir a imagem para o Docker Hub, faça o login com `docker login` e, em seguida, `docker push user-name/image-name:version`. Exemplo: `docker push vkusiaki/webserver:1.0`
+
+Para baixar uma imagem do Docker Hub:
+  - Na linha de comando, para procurar por imagens, utilize `docker search user-name(ou image-name)`. Exemplo: `docker search vkusiaki`
+  - Utilize o comando `docker pull user-name/image-name` para fazer o download da imagem
+
