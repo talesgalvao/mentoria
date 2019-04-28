@@ -186,3 +186,10 @@ Para baixar uma imagem do Docker Hub:
   - Na linha de comando, para procurar por imagens, utilize `docker search user-name(ou image-name)`. Exemplo: `docker search vkusiaki`
   - Utilize o comando `docker pull user-name/image-name` para fazer o download da imagem
 
+
+### Aula 13
+Um container será usado para montar um `registry` local. Utilizar o comando `docker run -d -p 5000:5000 --restart=always --name=registry registry:2`. O parâmetro `-p` indica a especificação de uma porta do host para uma porta do container. Para o registry, a porta 5000 será usada. O parâmetro `--restart=always` faz com que o host Docker reinicie o container automaticamente caso haja algum problema com ele.
+
+Para fazer o push de uma imagem ao registry local, é preciso refazer a `tag` da imagem, utilizando o endereço do registry (no caso, localhost:5000). Para isso, utilize o comando `docker tag image-id localhost:5000/image-name`. O push deve ser feito com o comando `docker push image-tag`, exemplo: `docker push localhost:5000/webserver:1.0`. O `pull` da imagem é análogo ao `push`. Utilize `docker pull image-tag`, exemplo: `docker pull localhost:5000/webserver:1.0`.
+
+Para listar todas as imagens que estão neste registry local, utilize um `cURL`. O comando é `curl localhost:5000/v2/_catalog`.
