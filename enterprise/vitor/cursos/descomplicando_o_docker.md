@@ -193,3 +193,14 @@ Um container será usado para montar um `registry` local. Utilizar o comando `do
 Para fazer o push de uma imagem ao registry local, é preciso refazer a `tag` da imagem, utilizando o endereço do registry (no caso, localhost:5000). Para isso, utilize o comando `docker tag image-id localhost:5000/image-name`. O push deve ser feito com o comando `docker push image-tag`, exemplo: `docker push localhost:5000/webserver:1.0`. O `pull` da imagem é análogo ao `push`. Utilize `docker pull image-tag`, exemplo: `docker pull localhost:5000/webserver:1.0`.
 
 Para listar todas as imagens que estão neste registry local, utilize um `cURL`. O comando é `curl localhost:5000/v2/_catalog`.
+
+
+### Aula 14
+A bridge responsável por fazer a interface de rede de ym container é a `docker0`. Para encontrá-la, entre em um container e dê o comando `ifconfig`. Para que isso funcione, o container deve estar no modo `bridge`. Há diversos parâmetros que fazem a configuração de rede de um container:
+- `docker run -ti --dns 8.8.8.8 debian` define um servidor de dns que irá responder às requisições
+- `docker run -ti --hostname foo debian` define o hostname do container
+- `docker run -ti --link container-id (ou container-name)` faz o link do seu container com outro. Dá acesso à rede desse container
+- `docker run -ti --expose 80 debian` expõe uma porta do seu container
+- `docker run -ti --publish (ou -p) 8080:80 debian` faz o bind da porta 80 do container com a porta 8080 do host. Ao acessar a porta 8080 do host, é feito um redirect para a porta 80 do container
+- `docker run -ti --mac-address 12:34:de:b0:6b:61 debian` personaliza o mac-address do container
+- `docker run -ti --net=host debian` muda do modo `bridge` para o modo `host`. Todo o stack de rede utilizado será do host e não do container. Ou seja, dentro do container, o IP, rotas e todas as informações de rede serão do host
