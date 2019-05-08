@@ -204,3 +204,34 @@ A bridge responsável por fazer a interface de rede de ym container é a `docker
 - `docker run -ti --publish (ou -p) 8080:80 debian` faz o bind da porta 80 do container com a porta 8080 do host. Ao acessar a porta 8080 do host, é feito um redirect para a porta 80 do container
 - `docker run -ti --mac-address 12:34:de:b0:6b:61 debian` personaliza o mac-address do container
 - `docker run -ti --net=host debian` muda do modo `bridge` para o modo `host`. Todo o stack de rede utilizado será do host e não do container. Ou seja, dentro do container, o IP, rotas e todas as informações de rede serão do host
+
+
+### Aula 15
+Docker-Machine é um produto desenvolvido pelo próprio time do Docker. Com o Docker-Machine é possível criar `hosts Docker` em qualquer lugar (seja localmente, seja na nuvem). Para instalar o Docker-Machine, siga as instruções:
+
+```
+base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+```
+
+
+### Aula 16
+Para checar a versão, utilize `docker-machine version`.
+
+Para criar um novo host Docker, utilize `docker-machine create --driver virtualbox host-name`. O lugar onde vai ficar instalado o host Docker é reconhecido pelo Docker-Machine como driver. Ex.: AWS, Google Cloud, Vmware, Virtual Box, etc. 
+
+Para saber como conectar ao host Docker criado, execute `docker-machine env host-name`. Este comando devolve algumas variáveis de ambiente que precisam ser exportadas para conectar no host Docker. Para exportá-las de uma só vez, execute `eval "$(docker-machine env host-name)"`. Ao executar essa instrução conecta sua máquina ao daemon do host Docker criado. Neste momento, qualquer comando do Docker (ex.: `docker ps`, `docker images`) deve funcionar normalmente. Para ter certeza, execute `docker-machine ls`, que mostra os hosts Docker disponíveis e seus respectivos status.
+
+Alguns parâmetros de `docker-machine`:
+
+- `docker-machine ip host-name` mostra o IP deste host Docker
+- `docker-machine ssh host-name` conecta ao host Docker via SSH
+- `docker-machine inspect host-name` mostra informações referentes ao host Docker
+- `docker-machine stop host-name` finaliza o processo do host Docker
+- `docker-machine start host-name` inicia o processo do host Docker
+- `docker-machine ls host-name` mostra o status do host Docker
+- `docker-machine rm host-name` remove o host Docker
+
+
+### Aula 17
