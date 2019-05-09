@@ -235,3 +235,52 @@ Alguns parâmetros de `docker-machine`:
 
 
 ### Aula 17
+Docker-compose é uma forma simples de colocar todo seu ambiente em containers e não apenas "unidades". Em um único arquivo, é possível colocar todos os componentes de uma aplicação. Exemplo: Aplicação Python, banco Postgres e Redis seriam 3 containeres. Com o Docker-compose é possível fazer a configuração desses 3 componentes em um único arquivo.
+
+Exemplo de um docker-compose.yml:
+```
+db:
+  image: postgres
+web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/code
+  ports:
+    - 8000:8000
+  links:
+    - db
+```
+
+No exemplo acima há um container `db` e um container `web`. Mesmo após subir os containeres, é possível escalar cada um deles separadamente. Exemplo: `docker-compose scale db=2` ou `docker-compose scale web=4`.
+
+Para instalar o docker compose:
+```bash
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+Para verificar se a instalação foi bem sucedida, utilize `docker-compose --version`.
+
+Alguns parâmetros de um `docker-compose.yml`:
+- `build` indica o caminho do Dockerfile utilizado para o container
+- `command` envia um comando para ser executado dentro do container
+- `container_name` define um nome para o container
+- `dns` indica um servidor dns para o container
+- `dns_search` indica um search domain para o container
+- `dockerfile` especifica um Dockerfile que usa um nome alternativo
+- `env_file` especifica um arquivo de variáveis de ambiente que serão passadas para o container
+- `environment` adiciona variáveis de ambiente
+- `expose` expõe portas do container
+- `external_links` "linka" seu container com outro container que não faz parte desse arquivo compose
+- `extra_hosts` adiciona uma entrada no `/etc/hosts` do container
+- `image` indica a imagem utilizada para criar o container
+- `labels` adiciona metadados ao container
+- `links` "linka" seu container a outro container que está definido no arquivo compose
+- `log_driver` indica o formato de log a ser utilizado. Exemplo: syslog, json_file, etc
+- `net` indica o modo de uso de rede (bridge, host)
+- `ports` expõe portas do container e do host
+- `volumes` monta volumes dentro do container
+- `volumes_from` monta volumes de um outro container
+
+
+### Aula 18
