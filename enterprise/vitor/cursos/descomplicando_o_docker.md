@@ -284,3 +284,53 @@ Alguns parâmetros de um `docker-compose.yml`:
 
 
 ### Aula 18
+
+Projeto com Python + Postgres usando Docker Compose.
+
+```bash
+mkdir aula-compose
+cd aula-compose
+vim docker-compose.yml
+```
+
+O arquivo `docker-compose.yml` deve ser o seguinte:
+```bash
+db:
+  image: postgres
+web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/code
+  ports:
+    - 8000:8000
+  links:
+    - db
+```
+
+- `build: .` indica que existe um Dockerfile que será usado e ele está no mesmo 'nível' do arquivo `docker-compose.yml`
+- `volumes: - .:code` indica que o diretório atual será montado dentro do container na pasta `/code`
+- `ports: -8000:8000` fará o link da porta 8000 do host com a porta 8000 do container
+- `links: -db` fará o link deste container com o container `db` definido acima
+
+Para criar o Dockerfile da aplicação Python utilize `vim Dockerfile`. Conteúdo do arquivo:
+```bash
+FROM python:3.7
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /code
+WORKDIR /code
+ADD requirements.txt /code/
+RUN pip install -r requirements.txt
+ADD . /code/
+```
+
+O `requirements.txt` deve conter:
+```
+Django
+psycopg2
+```
+
+Para executar a sessão `web` do arquivo `docker-compose.yml`, utilize `docker-compose run web django-admin.py startproject composeexample .`. Esse comando cria apenas o container `web`.
+
+Ao digitar `docker-compose up`, o Compose irá subir o ambiente com todos os containeres definidos no arquivo. Para verificar os logs da aplicação, utilize `docker-compose logs`.
+
