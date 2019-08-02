@@ -24,7 +24,8 @@ Após finalizados os objetivos e tarefas ambos devem ser escritos no arquivo `go
 
 Ao decorrer de cada período, as **ações** serão documentadas para acompanhar as **evoluções e conquistas** com base nas objetivos definidos.
 
-O modelo de acompanhamento é realizado com um 1-on-1 semanal dividido em 3 etapas.
+O modelo de acompanhamento é realizado com um 1-on-1 semanal (de 30 minutos no máximo), para que as interações sejam menores e constantes, assim facilitando ajustes e redirecionamentos.
+Essas reuniões serão divididas em 3 etapas.
 
 ### 1. Revisão do status semanal
 
