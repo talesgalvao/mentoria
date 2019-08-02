@@ -37,7 +37,7 @@ O mentorado deve cadastrar tudo que foi feito/estudado na semana em um arquivo (
 Segue o padrão de 1-on-1 onde o mentorado fica avontade para falar sobre como esta se sentindo e tudo que permeia e impacta no desempenho do seu trabalho. Tudo deve ser anotado em um arquivo (que deve ser nomeado em ordem numérica) no diretório `one-x-one`.
 
 
-#### 3. Feedbacks
+### 3. Feedbacks
 
 Esta parte do 1-on-1 deve ser focada em troca de feedbacks, positivos e negativos de ambos os participantes. Se necessário adicionar os planos de ações baseado nos feedbacks.
 
