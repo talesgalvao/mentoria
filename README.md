@@ -6,7 +6,7 @@ Este repositório tem o propósito de auxiliar o acompanhamento dos objetivos pa
 - Médio (6 meses)
 - Longo (12 meses)
 
-Estes objetivos devem ser definidas antes do início da mentoria, visando sempre as ambições e aspirações de carreira do mentorado. Deve ser seguido o fluxo de 2 1-on-1 para a definição dos objetivos, no primeiro deve ser feito um rascunho e no segundo devem ser feitas as decições definitivas.
+Estes objetivos devem ser definidos antes do início da mentoria, visando sempre as ambições e aspirações de carreira do mentorado. Deve ser seguido o fluxo de 2 1-on-1 para a definição dos objetivos, no primeiro deve ser feito um rascunho e no segundo devem ser feitas as decições definitivas.
 
 Cada ciclo deve conter no máximo 2 objetivos, que por sua vez terão diversas tarefas, por onde vai ser feita a metrificação do progresso do objetivo.
 Obs.: é muito importante que os objetivos de cada ciclo se conversem e se completem.
@@ -22,7 +22,7 @@ Após finalizados os objetivos e tarefas ambos devem ser escritos no arquivo `go
 
 ## Acompanhamento
 
-Ao decorrer de cada período, as **ações** serão documentadas para acompanhar as **evoluções e conquistas** com base nas metas definidas.
+Ao decorrer de cada período, as **ações** serão documentadas para acompanhar as **evoluções e conquistas** com base nas objetivos definidos.
 
 O modelo de acompanhamento é realizado com um 1-on-1 semanal dividido em 3 etapas.
 
